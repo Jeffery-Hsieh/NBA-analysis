@@ -13,7 +13,7 @@ Tue, Oct 25, 2016|7:30 pm|Knicks|88|Cleveland Cavaliers|117|Box Score|
 ...|...|......|...|...|...|...|...|
 
 `each_game_box_score_url`：每場比賽的內容參數分析網址  
-`each_game_box_score_tables1`：每場比賽的內容參數分析內容  
+`each_game_box_score_tables`：每場比賽的內容參數分析內容  
 
 $October
 $Tue, Oct 25, 2016  
