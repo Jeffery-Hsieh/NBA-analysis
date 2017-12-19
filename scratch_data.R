@@ -4,6 +4,7 @@ library(rvest)
 library(dplyr)
 library(RCurl)
 library(XML)
+library(rjson)
 
 source("data_preprocess.R")
 

@@ -28,7 +28,7 @@ game_info_mapping = function(each_month_game,game_date_table){
                      )
     )
                      
-    names(result[[i]]) = c("Date","Visitor_team","Home_team","Winner_team",paste0(Home_team_name,"_box_scores"),paste0(Visitor_team_name,"_box_scores"))
+    names(result[[i]]) = c("Date","Visitor_team","Home_team","Winner_team",paste0(Visitor_team_name,"_box_scores"),paste0(Home_team_name,"_box_scores"))
   }
   return(result)
 }
