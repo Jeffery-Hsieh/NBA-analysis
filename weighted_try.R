@@ -1,3 +1,10 @@
+library(dplyr)
+library(e1071)
+
+#find the best model
+library(caret)
+
+set.seed(22)
 ###
 clear_data <- read.csv('nba_player_data.csv')
 
@@ -79,16 +86,37 @@ new_team_data <- merge(new_team_data,v3,by='Gameid')
 new_team_data <- merge(new_team_data,v4,by='Gameid')
 View(new_team_data)
 
+#data class transformation
+win_col = grep(pattern = "win",colnames(new_team_data))
+feature_col_num = grep(pattern = "usg_*",colnames(new_team_data))
+
+for (i in feature_col_num) {
+  col = new_team_data[,i]
+  new_team_data[,i] = as.numeric(levels(col))[col]
+}
+
+new_team_data[,win_col] = as.factor(new_team_data[,win_col])
+summary(new_team_data)
+
+#input data 
+model_input_data = new_team_data[,c(feature_col_num,win_col)]
+
 #SVM test
 names(new_team_data)
 dim(new_team_data)
-traindata2 <- new_team_data[1:1000,c(4:8,13,14)]
-testdata2 <- new_team_data[1001:1128, c(5:8,13,14)]
-svmfit2 = svm(as.factor(win) ~ ., data = traindata2, 
-              kernel = "polynomial", 
-              cost = 10, scale = FALSE)
-predict2 = predict(svmfit2, testdata2)
-ans2 = table(predict2, new_team_data[1001:1128,4])
 
+#find the best model
+features_name = colnames(new_team_data)[feature_col_num]
+model = train(as.formula(paste0("win ~" ,paste(features_name,collapse = "+") ) ),data = model_input_data,method = "svmPoly",trControl = trainControl(method = "cv",number = 5,verboseIter = TRUE))
+
+#build model
+traindata2 <- new_team_data[1:1000,c(feature_col_num)]
+testdata2 <- new_team_data[1001:1128, c(win,feature_col_num)]
+
+svmfit2 = svm(win ~ ., data = traindata2,
+              kernel = "polynomial",degree = 1,
+              cost = 1, scale = FALSE)
+predict2 = predict(svmfit2, testdata2)
+(ans2 = table(predict2, new_team_data[1001:1128,4]))
 
 
