@@ -11,3 +11,8 @@
     + 主場隊伍_box_scores：同上
 
 * game_result_table：各月份比賽隊伍與時間
+
+#### 資料集
+new_team_data：只有本隊數據
+diff_data：與對手數據相減
+new_diff_data：合併了隊伍名稱互換且數據加負號的資料
