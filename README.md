@@ -18,3 +18,9 @@ new_team_data：只有本隊數據
 diff_data：與對手數據相減
 
 new_diff_data：合併了隊伍名稱互換且數據加負號的資料
+
+after_diff_svmfit：使用兩隊數據相減後的資料進行svm分類
+
+nnetM：使用兩隊數據相減後的資料進行ann分類
+
+從new_diff_data直接篩選主場客場隊伍的資訊，將含有usg開頭的欄位丟入進行predict，如有疑問可先參考ANN.R的做法
