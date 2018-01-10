@@ -2,8 +2,11 @@ library(e1071)
 library(caret)
 
 source("data_trans_to_model_input.R")
+
+load("new_team_data.RData")
 load("diff_data.RData")
 
+new_team_data = trans_to_model_input(new_team_data)
 diff_data = trans_to_model_input(diff_data)
 
 #data featurea
@@ -14,7 +17,7 @@ feature_col_num = grep(pattern = "usg_*",colnames(diff_data))
 features_name = colnames(diff_data)[feature_col_num]
 
 #build model with clean data
-traindata1 <- new_team_data[1:1000,c(feature_col_num)]
+traindata1 <- new_team_data[1:1000,c(win_col,feature_col_num)]
 testdata1 <- new_team_data[1001:1128, c(win_col,feature_col_num)]
 
 before_diff_svmfit = svm(win ~ ., data = traindata1,
@@ -23,8 +26,8 @@ before_diff_svmfit = svm(win ~ ., data = traindata1,
 
 #test score
 predict1 = predict(before_diff_svmfit, testdata1)
-(ans1 = table(predict1, new_team_data[1001:1128,4]))
-
+ans1 = table(x = testdata1$win, y = predict1, dnn = c("實際", "預測"))
+ans1
 
 #build model with preprocessed data
 traindata2 <- diff_data[1:1000,c(win_col,feature_col_num)]
