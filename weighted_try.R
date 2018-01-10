@@ -82,19 +82,3 @@ new_team_data <- merge(new_team_data,v3,by='Gameid')
 new_team_data <- merge(new_team_data,v4,by='Gameid')
 View(new_team_data)
 
-#data content-factor to numeric
-
-#num of win_col and input features
-win_col = grep(pattern = "win",colnames(new_team_data))
-feature_col_num = grep(pattern = "usg_*",colnames(new_team_data))
-
-for (i in feature_col_num) {
-  col = new_team_data[,i]
-  new_team_data[,i] = as.numeric(levels(col))[col]
-}
-
-new_team_data[,win_col] = as.factor(new_team_data[,win_col])
-summary(new_team_data)
-
-#input data 
-model_input_data = new_team_data[,c(feature_col_num,win_col)]

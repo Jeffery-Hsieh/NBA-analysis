@@ -1,9 +1,15 @@
-read.csv('diff_data')
+library(e1071)
+
+#score before substraction
+load("new_team_data.RData")
+
+#score after substraction
+load("diff_data.RData")
 
 #SVM建模
-traindata4 <- diff_data[1:1000,c(4:10)]
-testdata4 <- diff_data[1001:1173,c(5:10)]
-svmfit4 = svm(as.factor(win) ~ .,data=traindata4,
+traindata <- diff_data[1:1000,c(4:10)]
+testdata <- diff_data[1001:1173,c(5:10)]
+svmfit_old = svm(as.factor(win) ~ .,data=traindata4,
               kernel = "linear",
               cost = 1 ,scale = F,gamma=0.5)
 predict4 = predict(svmfit4,testdata4)
